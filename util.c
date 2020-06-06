@@ -42,14 +42,18 @@ void ese1(){
     GraphADJ G;
     int** Matrix;
     int source,target;
+    int* ArrayInDegree;
+    int inDegree;
+    int outDegree;
+    clrscr();
     do{
-        clrscr();
+        
         printf("\n--Dato un grafo orientato, calcolare il grado uscente e il grado entrante.");
         printf("Ripetere l'esercizio sia usando una rappresentazione a matrice di adiacenza che con liste di adiacenza--\n");
         
         printf("\n1.Crea grafo con liste di adiacenza\n2.Crea grafo con matrice di adiacenza");
-        printf("\n3.Grado uscente ed entrante (lista di adiacenza)\n4.Grado uscente ed entrante (matrice di adiacenza)\n");
-
+        printf("\n3.Grado uscente ed entrante (lista di adiacenza)\n4.Grado uscente ed entrante (matrice di adiacenza)");
+        printf("\n0. Uscita\n");
         index=catchRequest();
         switch(index){
             case '1':
@@ -63,7 +67,7 @@ void ese1(){
                     }
                 }while(n < 1 || n > maxnodi);
                 
-                initGraph(n);
+                G=initGraph(n);
                 do{
                     printf("\nInserire il numero di archi: (massimo %d archi) ", n*(n-1));
                     scanf("%d",&e);
@@ -85,11 +89,27 @@ void ese1(){
 
                 printf("\nGrafo Creato: \n");
                 printGraph(G);
+                while(getchar() !='\n');
                 break;
+            
             case '2':
             
                 break;
-        
+            
+            case '3':
+                ArrayInDegree=(int*)malloc(sizeof(int)*G->nv);
+                ArrayInDegree = gradiEntranti(G,ArrayInDegree);
+                inDegree=MaxInDegree(ArrayInDegree,G->nv);
+                outDegree=MaxOutDegree(G);
+                printf("\nIn Degree: %d",inDegree);
+                printf("\nOut Degree: %d",outDegree);
+
+                break;
+            
+            case '4':
+            
+                break;
+            
             case '0':
                 printf("\nChiusura in corso\n");
                 quit=1;
