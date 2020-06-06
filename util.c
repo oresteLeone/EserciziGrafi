@@ -41,16 +41,18 @@ void ese1(){
     char index;
     GraphADJ G;
     int** Matrix;
+    int dim;
     int source,target;
     int* ArrayInDegree;
     int inDegree;
     int outDegree;
+
     clrscr();
+    printf("\n--Dato un grafo orientato, calcolare il grado uscente e il grado entrante.");
+    printf("Ripetere l'esercizio sia usando una rappresentazione a matrice di adiacenza che con liste di adiacenza--\n");
+    
     do{
-        
-        printf("\n--Dato un grafo orientato, calcolare il grado uscente e il grado entrante.");
-        printf("Ripetere l'esercizio sia usando una rappresentazione a matrice di adiacenza che con liste di adiacenza--\n");
-        
+               
         printf("\n1.Crea grafo con liste di adiacenza\n2.Crea grafo con matrice di adiacenza");
         printf("\n3.Grado uscente ed entrante (lista di adiacenza)\n4.Grado uscente ed entrante (matrice di adiacenza)");
         printf("\n0. Uscita\n");
@@ -69,7 +71,7 @@ void ese1(){
                 
                 G=initGraph(n);
                 do{
-                    printf("\nInserire il numero di archi: (massimo %d archi) ", n*(n-1));
+                    printf("\nInserire un numero massimo di archi: (non piu' di %d archi) ", n*(n-1));
                     scanf("%d",&e);
                     if( e < 1 || e > (n*(n-1)) ){
                         printf("numero non valido!\n");
@@ -93,7 +95,36 @@ void ese1(){
                 break;
             
             case '2':
-            
+                do{
+                    printf("\nInserire numero nodi: (massimo %d nodi) ",maxnodi);
+                    scanf("%d",&n);
+                    if(n < 1 || n > maxnodi){
+                        printf("numero non valido!\n");
+                    }
+                }while(n < 1 || n > maxnodi);
+                Matrix=initMatrix(n);
+                dim=n;
+                do{
+                    printf("\nInserire un numero massimo di archi: (non piu' di %d archi) ", n*(n-1));
+                    scanf("%d",&e);
+                    if( e < 1 || e > (n*(n-1)) ){
+                        printf("numero non valido!\n");
+                    }
+                }while( e < 1 || e > (n*(n-1)) );
+                srand((unsigned int)time(&t));
+                for(i=0;i<e;i++){
+                    source=rand()%n;
+                    target=rand()%n;
+                    if(target == source)
+                        target++;
+                    if(target == n)
+                        target -=2;
+                    Matrix[source][target] = 1;
+
+                }
+                printf("\nGrafo Matrice Creato: \n");
+                printMatrix(Matrix,n);
+                while(getchar() !='\n');
                 break;
             
             case '3':
@@ -107,7 +138,10 @@ void ese1(){
                 break;
             
             case '4':
-            
+                inDegree=MaxInDegreeMATRIX(Matrix, dim);
+                outDegree=MaxOutDegreeMATRIX(Matrix, dim);
+                printf("\nIn Degree: %d",inDegree);
+                printf("\nOut Degree: %d",outDegree);
                 break;
             
             case '0':
