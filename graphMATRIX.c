@@ -62,3 +62,29 @@ void printMatrix(int** Matrix,int dim){
     
     printf("\n");
 }
+
+int* gradiEntrantiMATRIX(int** Matrix, int dim){
+    int i,k,sum;
+    int* ArrayInDegree = (int*)malloc(sizeof(int)*dim);
+    for(i=0;i<dim;i++){
+        sum=0;
+        for(k=0;k<dim;k++){
+            sum+=Matrix[k][i];
+        }
+        ArrayInDegree[i]=sum;
+    }
+    return ArrayInDegree;
+}
+
+int* gradiUscentiMATRIX(int** Matrix, int dim){
+    int i,k,sum;
+    int* ArrayOutDegree = (int*)malloc(sizeof(int)*dim);
+    for(i=0;i<dim;i++){
+        sum=0;
+        for(k=0;k<dim;k++){
+            sum+=Matrix[i][k];
+        }
+        ArrayOutDegree[i]=sum;
+    }
+    return ArrayOutDegree;
+}

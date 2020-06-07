@@ -148,3 +148,16 @@ int MaxOutDegree(GraphADJ G){
     }
     return max;
 }
+
+
+int* gradiUscenti(GraphADJ G, int ArrayOutDegree[]){
+	int i;
+	for (i = 0;i < G->nv;i++) {
+		ArrayOutDegree[i] = 0;
+	}
+	for (i = 0;i < G->nv;i++) {
+		ArrayOutDegree[i] = DimLista(G->adj[i]);
+
+	}
+	return ArrayOutDegree;
+}

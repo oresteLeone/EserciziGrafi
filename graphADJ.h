@@ -45,4 +45,6 @@ int MaxInDegree(int ArrayInDegree[], int dim);
 //restituisce il massimo grado uscente
 int MaxOutDegree(GraphADJ G);
 
+int* gradiUscenti(GraphADJ G, int ArrayOutDegree[]);
+
 #endif

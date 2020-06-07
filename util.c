@@ -160,7 +160,225 @@ void ese1(){
 
 
 void ese2(){
+    
+    time_t t;
     int quit=0;
+    int n,e,i,k;
+    char index;
+    char manuale;
+    GraphADJ G;
+    int** Matrix;
+    int dim;
+    int source,target;
+    int* ArrayInDegree;
+    int* ArrayOutDegree;
+    int sum;
+
+    clrscr();
+    printf("\n--Dato un grafo orientato, stabilire se esiste un nodo pozzo.");
+    printf("\nSi definisce nodo pozzo un nodo verso il quale convergono tutti gli altri nodi, ma dal quale non ci si può muovere.");
+    printf("\nSe esso esiste, modificare opportunamente il grafo in modo da non avere più un nodo pozzo.");
+    printf("\nRipetere l'esercizio sia usando una rappresentazione a matrice di adiacenza che con liste di adiacenza--\n");
+    
+    do{
+        printf("\n\n1.Crea grafo con liste di adiacenza\n2.Crea grafo con matrice di adiacenza");
+        printf("\n3.Trova nodo pozzo e correggi (lista di adiacenza)\n4.Trova nodo pozzo e correggi (matrice di adiacenza)");
+        printf("\n0. Uscita\n");
+        index=catchRequest();
+        switch(index){
+            case '1':
+                clrscr();
+                
+                do{
+                    printf("\nInserire numero nodi: (massimo %d nodi) ",maxnodi);
+                    scanf("%d",&n);
+                    if(n < 1 || n > maxnodi){
+                        printf("numero non valido!\n");
+                    }
+                }while(n < 1 || n > maxnodi);
+                
+                G=initGraph(n);
+                while(getchar() !='\n');
+                printf("\nInserimento archi manuale o automatico casuale? (1 manuale / 0 casuale) ");
+                manuale=catchRequest();
+                if(manuale == '1'){
+                    do{
+                        printf("\nInserire numero di archi: (non piu' di %d archi) ", n*(n-1));
+                        scanf("%d",&e);
+                        if( e < 1 || e > (n*(n-1)) ){
+                            printf("numero non valido!\n");
+                        }
+                    }while( e < 1 || e > (n*(n-1)) );
+                    for(i=0;i<e;i++){
+                        printf("Arco %d\n",i);
+                        do {
+                            printf("Nodo sorgente: ");
+                            scanf("%d",&source);
+                            if(source <0 || source > n ){
+                                printf("Deve essere compreso tra 0 e %d!\n", n);
+                            }
+                        }while(source<0 || source > n );
+                        do {
+                            printf("Nodo destinazione: ");
+                            scanf("%d",&target);
+                            if(target <0 || target > n || target == source ){
+                                printf("Deve essere compreso tra 0 e %d e non essere uguale alla sorgente!\n", n);
+                            }
+                        }while(target<0 || target > n || target == source);
+
+                        addEdge(G, source, target, 1);
+
+                    }
+
+                }else {
+
+                    do{
+                        printf("\nInserire un numero massimo di archi: (non piu' di %d archi) ", n*(n-1));
+                        scanf("%d",&e);
+                        if( e < 1 || e > (n*(n-1)) ){
+                            printf("numero non valido!\n");
+                        }
+                    }while( e < 1 || e > (n*(n-1)) );
+                    srand((unsigned int)time(&t));
+                    for(i=0;i<e;i++){
+                        source=rand()%n;
+                        target=rand()%n;
+                        if(target == source)
+                            target++;
+                        if(target == n)
+                            target -=2;
+                        addEdge(G,source,target,1);
+
+                    }
+                }
+                printf("\nGrafo Creato: \n");
+                printGraph(G);
+                while(getchar() !='\n');
+                break;
+            
+            case '2':
+                clrscr();
+                do{
+                    printf("\nInserire numero nodi: (massimo %d nodi) ",maxnodi);
+                    scanf("%d",&n);
+                    if(n < 1 || n > maxnodi){
+                        printf("numero non valido!\n");
+                    }
+                }while(n < 1 || n > maxnodi);
+                Matrix=initMatrix(n);
+                dim=n;
+                while(getchar() !='\n');
+                printf("\nInserimento archi manuale o automatico casuale? (1 manuale / 0 casuale) ");
+                manuale=catchRequest();
+                if(manuale == '1'){
+                    do{
+                        printf("\nInserire numero di archi: (non piu' di %d archi) ", n*(n-1));
+                        scanf("%d",&e);
+                        if( e < 1 || e > (n*(n-1)) ){
+                            printf("numero non valido!\n");
+                        }
+                    }while( e < 1 || e > (n*(n-1)) );
+                    for(i=0;i<e;i++){
+                        printf("Arco %d\n",i);
+                        do {
+                            printf("Nodo sorgente: ");
+                            scanf("%d",&source);
+                            if(source <0 || source > n ){
+                                printf("Deve essere compreso tra 0 e %d!\n", n);
+                            }
+                        }while(source<0 || source > n );
+                        do {
+                            printf("Nodo destinazione: ");
+                            scanf("%d",&target);
+                            if(target <0 || target > n || target == source ){
+                                printf("Deve essere compreso tra 0 e %d e non essere uguale alla sorgente!\n", n);
+                            }
+                        }while(target<0 || target > n || target == source);
+
+                        Matrix[source][target]=1;
+                    }
+
+                }else {
+
+                    do{
+                        printf("\nInserire un numero massimo di archi: (non piu' di %d archi) ", n*(n-1));
+                        scanf("%d",&e);
+                        if( e < 1 || e > (n*(n-1)) ){
+                            printf("numero non valido!\n");
+                        }
+                    }while( e < 1 || e > (n*(n-1)) );
+                    srand((unsigned int)time(&t));
+                    for(i=0;i<e;i++){
+                        source=rand()%n;
+                        target=rand()%n;
+                        if(target == source)
+                            target++;
+                        if(target == n)
+                            target -=2;
+                        Matrix[source][target] = 1;
+
+                    }
+                }
+                printf("\nGrafo Matrice Creato: \n");
+                printMatrix(Matrix,n);
+                while(getchar() !='\n');
+                break;
+            
+            case '3':
+                ArrayInDegree=(int*)malloc(sizeof(int)*G->nv);
+                ArrayInDegree = gradiEntranti(G,ArrayInDegree);
+                ArrayOutDegree=(int*)malloc(sizeof(int)*G->nv);
+                ArrayOutDegree = gradiUscenti(G,ArrayOutDegree);
+                for(i=0;i<G->nv;i++){
+                    if(ArrayOutDegree[i] == 0){
+                        if(ArrayInDegree[i] == G->nv-1){
+                            printf("\n%d e' un nodo pozzo, Aggiunta di un arco per renderlo non tale: ",i);
+                            printf("%d -> %d \n", i, (i+1)%G->nv);
+                            addEdge( G, i, (i+1)%G->nv, 1);
+                            printf("\nGrafo Risultante: \n");
+                            printGraph(G);
+                            break;
+                        }else 
+                            printf("\n%d non e' un nodo pozzo non avendo %d archi entranti (dovrebbero essere numero nodi -1) ", i, ArrayInDegree[i]);
+                    }else
+                        printf("\n%d non puo' essere un nodo pozzo poiché ha almeno un arco uscente", i);
+                    
+                }
+                break;
+            
+            case '4':
+                ArrayInDegree=(int*)malloc(sizeof(int)*dim);
+                ArrayInDegree = gradiEntrantiMATRIX( Matrix, dim);
+                ArrayOutDegree=(int*)malloc(sizeof(int)*dim);
+                ArrayOutDegree = gradiUscentiMATRIX( Matrix, dim);
+                for(i=0;i<dim;i++){
+                    if(ArrayOutDegree[i] == 0 && ArrayInDegree[i] == dim-1){
+                        printf("\n%d e' un nodo pozzo, Aggiunta di un arco per renderlo non tale: ",i);
+                        printf("%d -> %d \n", i, (i+1)%G->nv);
+                        Matrix[i][(i+1)%dim]=1;
+                        printf("\nGrafo Risultante: \n");
+                        printMatrix(Matrix, dim);
+                        break;
+                    }
+                    else
+                        printf("\n%d non puo' essere un nodo pozzo(non ha grado entrante %d e uscente 0)",i,dim-1);
+                    
+                }
+
+                break;
+            
+            case '0':
+                printf("\nChiusura in corso\n");
+                quit=1;
+                break;
+        
+            default:
+                printf("\nInput non valido!");
+                break;
+        }
+
+    }while(quit!=1);
+
 }
 
 

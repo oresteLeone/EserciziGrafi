@@ -9,6 +9,8 @@ int main(){
     char richiesta;
 
     do{
+        clrscr();
+        printf("\n\tOreste Leone N86001980");
         printf("\nEsercizi Grafi:\n");
         printf("\n1.Esercizio 1");
         printf("\n2.Esercizio 2");
