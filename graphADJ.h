@@ -47,4 +47,6 @@ int MaxOutDegree(GraphADJ G);
 
 int* gradiUscenti(GraphADJ G, int ArrayOutDegree[]);
 
+int checkSottografoPesiMultipli(edgeADJ listaG , edgeADJ listaH );
+
 #endif

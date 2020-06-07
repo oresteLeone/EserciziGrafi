@@ -161,3 +161,16 @@ int* gradiUscenti(GraphADJ G, int ArrayOutDegree[]){
 	}
 	return ArrayOutDegree;
 }
+
+int checkSottografoPesiMultipli(edgeADJ listaG , edgeADJ listaH ){
+	int check = 1;
+	if(listaG){
+	check=checkSottografoPesiMultipli(listaG->next,listaH->next);
+	if(check==1 && ( (listaG->peso)%(listaH->peso) == 0 || (listaH->peso)%(listaG->peso) == 0 ) ){
+		check=1;
+	}
+	else 
+		check=-1;
+	}
+	return check;
+}
