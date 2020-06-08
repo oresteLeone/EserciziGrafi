@@ -201,3 +201,32 @@ edgeADJ findNode(int target, edgeADJ listaH){
 	return tmp;
 
 }
+
+void GetAcycle(GraphADJ G) {
+  int i, *aux =(int* ) calloc(G->nv,sizeof(int));
+  if(!aux) {
+    printf("Errore di Allocazione\n");
+  }else { 
+    for(i = 0; i < G->nv; i++)
+      if(!aux[i]) {
+         GetAcycleUtil(G,i,aux);
+      }
+	  
+    free(aux);
+  }
+  
+  void GetAcycleUtil(GraphADJ G, int i, int* aux) {
+    edge e; 
+    edge tmp;
+    aux[i] = 1;
+    for(e = G->adj[i]; e; ){
+      	if(!aux[e->key]) { 
+        	GetAcycleUtil(G,e->key,aux);
+		e = e->next
+      	}else{
+      		tmp=e->next;
+		removeEdge(G,i,e->key);
+		e=tmp;
+      	}    
+    }
+  }

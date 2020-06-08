@@ -51,4 +51,8 @@ int checkSottografoPesiMultipli(edgeADJ listaG , edgeADJ listaH );
 
 edgeADJ findNode(int target, edgeADJ listaH);
 
+void GetAcycle(GraphADJ G);
+
+void GetAcycleUtil(GraphADJ G, int i, int* aux);
+
 #endif
