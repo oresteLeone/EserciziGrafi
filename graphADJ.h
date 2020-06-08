@@ -49,4 +49,6 @@ int* gradiUscenti(GraphADJ G, int ArrayOutDegree[]);
 
 int checkSottografoPesiMultipli(edgeADJ listaG , edgeADJ listaH );
 
+edgeADJ findNode(int target, edgeADJ listaH);
+
 #endif

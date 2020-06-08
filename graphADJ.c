@@ -162,15 +162,42 @@ int* gradiUscenti(GraphADJ G, int ArrayOutDegree[]){
 	return ArrayOutDegree;
 }
 
-int checkSottografoPesiMultipli(edgeADJ listaG , edgeADJ listaH ){
-	int check = 1;
+
+int checkSottografoPesiMultipli(edgeADJ listaG, edgeADJ listaH){
+	int check=1;
+	edgeADJ NodoH;
 	if(listaG){
-	check=checkSottografoPesiMultipli(listaG->next,listaH->next);
-	if(check==1 && ( (listaG->peso)%(listaH->peso) == 0 || (listaH->peso)%(listaG->peso) == 0 ) ){
-		check=1;
-	}
-	else 
-		check=-1;
+		check=checkSottografoPesiMultipli(listaG->next,listaH);
+		if(check==1){
+			
+			NodoH=findNode(listaG->key,listaH);
+			if(NodoH){
+
+				if( (listaG->peso)%(NodoH->peso) == 0 || (NodoH->peso)%(listaG->peso) == 0 ){
+					check=1;
+				}
+				else 
+					check=-1;
+			
+			}
+			else 
+				check=-1;
+		}
 	}
 	return check;
+}
+
+edgeADJ findNode(int target, edgeADJ listaH){
+	edgeADJ tmp=NULL;
+	if(listaH){
+		if(listaH->key == target){
+			tmp=listaH;
+		}else {
+			tmp=findNode(target,listaH->next);
+
+		}
+
+	}
+	return tmp;
+
 }

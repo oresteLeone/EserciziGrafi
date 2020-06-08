@@ -418,7 +418,15 @@ void ese3(){
                 G=initGraph(n);
                 while(getchar() !='\n');
                 printf("\nInserimento archi manuale o automatico casuale? (1 manuale / 0 casuale) ");
-                manuale=catchRequest();
+                do{
+                    manuale=catchRequest();
+                    if (manuale!='1' && manuale!='0')
+                    {
+                        printf("Inserire 1 o 0!\n");
+                    }
+                    
+                }while(manuale !='1' && manuale!='0');
+                
                 if(manuale == '1'){
                     do{
                         printf("\nInserire numero di archi: (non piu' di %d archi) ", n*(n-1));
@@ -454,7 +462,7 @@ void ese3(){
 
                     }
 
-                }else {
+                }else if(manuale == '0') {
 
                     do{
                         printf("\nInserire un numero massimo di archi: (non piu' di %d archi) ", n*(n-1));
@@ -476,6 +484,8 @@ void ese3(){
 
                     }
                 }
+                
+                
                 printf("\nGrafo G Creato: \n");
                 printGraph(G);
                 while(getchar() !='\n');
@@ -494,8 +504,16 @@ void ese3(){
                 
                 H=initGraph(n);
                 while(getchar() !='\n');
-                printf("\nInserimento archi manuale o automatico casuale? (1 manuale / 0 casuale) ");
-                manuale=catchRequest();
+                printf("\nInserimento archi manuale o automatico casuale? (1 manuale / 0 casuale ) ");
+                do{
+                    manuale=catchRequest();
+                    if (manuale!='1' && manuale!='0')
+                    {
+                        printf("Inserire 1 o 0!\n");
+                    }
+                    
+                }while(manuale !='1' && manuale!='0');
+                
                 if(manuale == '1'){
                     do{
                         printf("\nInserire numero di archi: (non piu' di %d archi) ", n*(n-1));
@@ -531,7 +549,7 @@ void ese3(){
 
                     }
 
-                }else {
+                }else if(manuale =='0'){
 
                     do{
                         printf("\nInserire un numero massimo di archi: (non piu' di %d archi) ", n*(n-1));
@@ -553,6 +571,7 @@ void ese3(){
 
                     }
                 }
+                
                 printf("\nGrafo H Creato: \n");
                 printGraph(H);
                 while(getchar() !='\n');
