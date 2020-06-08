@@ -55,4 +55,8 @@ void GetAcycle(GraphADJ G);
 
 void GetAcycleUtil(GraphADJ G, int i, int* aux);
 
+int isParent(int target, edgeADJ listSource );
+
+int goThrough(int target, int source , GraphADJ G);
+
 #endif

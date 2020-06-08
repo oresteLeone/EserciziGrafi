@@ -223,11 +223,51 @@ void GetAcycle(GraphADJ G) {
     for(e = G->adj[i]; e; ){
       	if(!aux[e->key]) { 
         	GetAcycleUtil(G,e->key,aux);
-		e = e->next;
+			e = e->next;
       	}else{
-      		tmp=e->next;
-		removeEdge(G,i,e->key);
-		e=tmp;
+			int c=isParent(i, G->adj[e->key]);
+			if(c){
+				tmp=e->next;
+				removeEdge(G,i,e->key);
+				e=tmp;
+			}
+      		else{
+				  int cycle=goThrough(i,e->key,G);
+				  if(cycle){
+					tmp=e->next;
+					removeEdge(G,i,e->key);
+					e=tmp;
+				  }else
+				  {
+					e=e->next;
+				  }
+				  
+			  }
       	}    
     }
   }
+
+int isParent(int target, edgeADJ listSource ){
+	int res=0;
+	if(listSource){
+		res=isParent(target, listSource->next);
+		if(listSource->key == target){
+			res=1;
+		}
+	}
+	return res;
+
+}
+
+int goThrough(int target, int source , GraphADJ G){
+	int res=0;
+	if(G->adj[source]){
+		res=isParent(target,G->adj[source]);
+		if(res==0){
+			res=goThrough(target,G->adj[source]->key, G);
+			
+
+		}
+	}
+	return res;
+}
