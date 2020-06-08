@@ -721,7 +721,11 @@ void ese4(){
                 break;
 
             case '2':
-            
+                printf("\nGrafo G Precedente: \n");
+                printGraph(G);
+                GetAcycle(G);
+                printf("\nGrafo G Modificato se era presente almeno un ciclo: \n");
+                printGraph(G);
             
                 break;
             
