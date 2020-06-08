@@ -623,9 +623,13 @@ void ese3(){
 
 
 void ese4(){
+    time_t t;
     char index;
     char manuale;
     int quit=0;
+    int i, n, e, source, target;
+    GraphADJ G;
+    int check=1;
 
     clrscr();
     printf("\n--Dato un grafo G orientato rappresentato con liste di adiacenza, scrivere una funzione ");
@@ -638,10 +642,84 @@ void ese4(){
         index=catchRequest();
         switch(index){
             case '1':
+                clrscr();
+                
+                do{
+                    printf("\nInserire numero nodi: (massimo %d nodi) ",maxnodi);
+                    scanf("%d",&n);
+                    if(n < 1 || n > maxnodi){
+                        printf("numero non valido!\n");
+                    }
+                }while(n < 1 || n > maxnodi);
+                
+                G=initGraph(n);
+                while(getchar() !='\n');
+                printf("\nInserimento archi manuale o automatico casuale? (1 manuale / 0 casuale) ");
+                do{
+                    manuale=catchRequest();
+                    if (manuale!='1' && manuale!='0')
+                    {
+                        printf("Inserire 1 o 0!\n");
+                    }
+                    
+                }while(manuale !='1' && manuale!='0');
+                
+                if(manuale == '1'){
+                    do{
+                        printf("\nInserire numero di archi: (non piu' di %d archi) ", n*(n-1));
+                        scanf("%d",&e);
+                        if( e < 1 || e > (n*(n-1)) ){
+                            printf("numero non valido!\n");
+                        }
+                    }while( e < 1 || e > (n*(n-1)) );
+                    for(i=0;i<e;i++){
+                        printf("Arco %d\n",i);
+                        do {
+                            printf("Nodo sorgente: ");
+                            scanf("%d",&source);
+                            if(source <0 || source > n ){
+                                printf("Deve essere compreso tra 0 e %d!\n", n);
+                            }
+                        }while(source<0 || source > n );
+                        do {
+                            printf("Nodo destinazione: ");
+                            scanf("%d",&target);
+                            if(target <0 || target > n || target == source ){
+                                printf("Deve essere compreso tra 0 e %d e non essere uguale alla sorgente!\n", n);
+                            }
+                        }while(target<0 || target > n || target == source);
+                        addEdge(G, source, target, 1);
 
+                    }
 
+                }else if(manuale == '0') {
+
+                    do{
+                        printf("\nInserire un numero massimo di archi: (non piu' di %d archi) ", n*(n-1));
+                        scanf("%d",&e);
+                        if( e < 1 || e > (n*(n-1)) ){
+                            printf("numero non valido!\n");
+                        }
+                    }while( e < 1 || e > (n*(n-1)) );
+                    srand((unsigned int)time(&t));
+                    for(i=0;i<e;i++){
+                        source=rand()%n;
+                        target=rand()%n;
+                        
+                        if(target == source)
+                            target++;
+                        if(target == n)
+                            target -=2;
+                        addEdge(G,source,target,1);
+
+                    }
+                }
+                
+                printf("\nGrafo G Creato: \n");
+                printGraph(G);
+                while(getchar() !='\n');
                 break;
-            
+
             case '2':
             
             
