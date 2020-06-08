@@ -214,15 +214,16 @@ void GetAcycle(GraphADJ G) {
 	  
     free(aux);
   }
-  
+} 
+
   void GetAcycleUtil(GraphADJ G, int i, int* aux) {
-    edge e; 
-    edge tmp;
+    edgeADJ e; 
+    edgeADJ tmp;
     aux[i] = 1;
     for(e = G->adj[i]; e; ){
       	if(!aux[e->key]) { 
         	GetAcycleUtil(G,e->key,aux);
-		e = e->next
+		e = e->next;
       	}else{
       		tmp=e->next;
 		removeEdge(G,i,e->key);
