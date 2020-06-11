@@ -165,20 +165,17 @@ int* gradiUscenti(GraphADJ G, int ArrayOutDegree[]){
 
 int checkSottografoPesiMultipli(edgeADJ listaG, edgeADJ listaH){
 	int check=1;
-	edgeADJ NodoH;
-	if(listaG){
-		check=checkSottografoPesiMultipli(listaG->next,listaH);
+	edgeADJ NodoG;
+	if(listaH){
+		check=checkSottografoPesiMultipli(listaG,listaH->next);
 		if(check==1){
-			
-			NodoH=findNode(listaG->key,listaH);
-			if(NodoH){
-
-				if( (listaG->peso)%(NodoH->peso) == 0 || (NodoH->peso)%(listaG->peso) == 0 ){
+			NodoG=findNode(listaH->key,listaG);
+			if(NodoG){
+				if( (listaH->peso)%(NodoG->peso) == 0 || (NodoG->peso)%(listaH->peso) == 0 ){
 					check=1;
 				}
 				else 
 					check=-1;
-			
 			}
 			else 
 				check=-1;
@@ -187,13 +184,13 @@ int checkSottografoPesiMultipli(edgeADJ listaG, edgeADJ listaH){
 	return check;
 }
 
-edgeADJ findNode(int target, edgeADJ listaH){
+edgeADJ findNode(int target, edgeADJ listaG){
 	edgeADJ tmp=NULL;
-	if(listaH){
-		if(listaH->key == target){
-			tmp=listaH;
+	if(listaG){
+		if(listaG->key == target){
+			tmp=listaG;
 		}else {
-			tmp=findNode(target,listaH->next);
+			tmp=findNode(target,listaG->next);
 
 		}
 
@@ -270,4 +267,25 @@ int goThrough(int target, int source , GraphADJ G){
 		}
 	}
 	return res;
+}
+
+
+void compare(GraphADJ G, GraphADJ H){
+	int i,check=1;
+	if(G->nv < H->nv){
+        printf("\nIl grafo H ha un numero maggiore di nodi rispetto a G, ");
+        printf("H non può essere sottografo con pesi multipli di G\n");
+        return;
+    }else{
+        for(i=0;i < H->nv;i++){
+            check=checkSottografoPesiMultipli(G->adj[i], H->adj[i]);
+			if(check==-1)
+				break;
+            }
+        if(check==-1){
+            printf("\nH non è un sottografo con pesi multipli di G\n");
+        }else{
+            printf("\nH e' un sottografo a pesi multipli di G\n");
+        }
+    }
 }

@@ -579,31 +579,7 @@ void ese3(){
                 
             case '3':
 
-                if(G->nv != H->nv){
-                    printf("\nI grafi G e H hanno un numero differente di nodi, ");
-                    printf("H non può essere sottografo con pesi multipli di G\n");
-                    break;
-
-                }else{
-                    for(i=0;i<G->nv;i++){
-                        if(DimLista(G->adj[i]) != DimLista(H->adj[i])){
-                            printf("\nI nodi %d non hanno lo stesso numero di archi ",i);
-                            check=-1;
-                            break;
-                        }
-                        check=checkSottografoPesiMultipli(G->adj[i], H->adj[i]);
-                    }
-                    if(check==-1){
-                        printf("\nH non è un sottografo con pesi multipli di G\n");
-                    }else
-                    {
-                        printf("\nH e' un sottografo a pesi multipli di G\n");
-                    }
-                    
-
-                }
-            
-            
+                compare(G,H);            
                 break;
             
             case '0':

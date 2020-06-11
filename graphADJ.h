@@ -59,4 +59,6 @@ int isParent(int target, edgeADJ listSource );
 
 int goThrough(int target, int source , GraphADJ G);
 
+void compare(GraphADJ G, GraphADJ H);
+
 #endif
